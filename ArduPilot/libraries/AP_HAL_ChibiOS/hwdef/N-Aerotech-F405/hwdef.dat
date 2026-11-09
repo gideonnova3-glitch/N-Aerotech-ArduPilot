@@ -9,6 +9,7 @@ BOARD_NAME N-Aerotech-F405
 undef PC0
 undef PC1
 undef PC13
+undef PC14
 
 # Override Pin Mapping sesuai Skematik N-Aerotech-F405
 # SPI1: IMU Utama (ICM-42688-P)
