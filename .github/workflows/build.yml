@@ -18,7 +18,12 @@ jobs:
 
       - name: Copy Custom Board Definition
         run: |
-          mkdir -p Libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+          # Menyalin folder board kustom N-Aerotech-F405 ke dalam repositori ArduPilot
+          mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+          # Jika file hwdef.dat sudah ada di root, salin ke folder tujuan
+          if [ -f "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          fi
 
       - name: Set up Python Environment
         uses: actions/setup-python@v5
