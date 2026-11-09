@@ -8,21 +8,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ardupilot
     steps:
       - name: Checkout ArduPilot Repository
         uses: actions/checkout@v4
         with:
           repository: ArduPilot/ardupilot
+          path: ardupilot
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Copy Custom Board Definition
         run: |
-          # Menyalin folder board kustom N-Aerotech-F405 ke dalam repositori ArduPilot
           mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          # Jika file hwdef.dat sudah ada di root, salin ke folder tujuan
-          if [ -f "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            cp ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          # Salin file hwdef.dat dari root repo ke folder ardupilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/ jika ada
+          if [ -f "../libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp ../libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           fi
 
       - name: Set up Python Environment
