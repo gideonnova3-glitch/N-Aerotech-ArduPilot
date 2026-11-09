@@ -1,0 +1,5 @@
+MCU STM32F4xx STM32F405RGT6
+BOARD_NAME N-Aerotech-F405
+
+# Definisikan clock dan sensor utama sesuai skematikmu
+# (atau sesuaikan dengan pinout spesifik yang kamu inginkan)
