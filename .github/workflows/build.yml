@@ -30,9 +30,9 @@ jobs:
 
       - name: Configure and Compile Copter
         run: |
-          # Mengkompilasi firmware Copter untuk target board mandiri N-Aerotech-F405
-          ./waf configure --board N-Aerotech-F405 --disable-bootloader
-          ./waf copter
+          # Melakukan update/refresh modul dan mendeteksi hwdef kustom
+          python3 waf.py configure --board N-Aerotech-F405 --disable-bootloader
+          python3 waf.py copter
 
       - name: Upload Firmware Artifacts
         uses: actions/upload-artifact@v4
