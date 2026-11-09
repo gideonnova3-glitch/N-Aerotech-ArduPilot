@@ -30,9 +30,9 @@ jobs:
 
       - name: Configure and Compile Copter
         run: |
-          # Melakukan update/refresh modul dan mendeteksi hwdef kustom
-          python3 waf.py configure --board N-Aerotech-F405 --disable-bootloader
-          python3 waf.py copter
+          # Perintah waf yang benar langsung menggunakan skrip utama ArduPilot
+          ./waf configure --board N-Aerotech-F405 --disable-bootloader
+          ./waf copter
 
       - name: Upload Firmware Artifacts
         uses: actions/upload-artifact@v4
