@@ -1,5 +1,103 @@
-MCU STM32F4xx STM32F405RGT6
-BOARD_NAME N-Aerotech-F405
+# ==============================================================================
+# Hardware Definition for N-Aerotech-F405 (Independent Custom Board)
+# Based on Schematic SCH_Schematic3 (STM32F405RGT6)
+# ==============================================================================
 
-# Definisikan clock dan sensor utama sesuai skematikmu
-# (atau sesuaikan dengan pinout spesifik yang kamu inginkan)
+# MCU & Core Configuration
+MCU STM32F40x STM32F405
+board_name N-Aerotech-F405
+define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
+AP_VERSION_NAME N-Aerotech-F405-V1.0
+
+# Flash Size & Memory Map (1MB Flash)
+FLASH_SIZE_KB 1024
+env AP_HAL_CHIBIOS_USE_LEGACY_PLI FALSE
+
+# Clock Configuration (External 8MHz Crystal X2)
+CLK HSE 8000000
+CLK_SYSCLK 168000000
+CLK_HSIRC 16000000
+
+# ==============================================================================
+# SPI Buses & Sensors (ICM-42688-P IMU, W25Q128 Flash, AT7456E OSD, SPL06 Baro)
+# ==============================================================================
+# SPI1: IMU Utama (ICM-42688-P) pada U4
+SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
+SPIDEV imu1 SPI1 DEVID1 PA4
+
+# SPI2: Flash Memory (W25Q128JVPIQ) pada U5
+SPI 2 PB13 PB14 PB15 SPI_DEVICE_OSD
+SPIDEV flash SPI2 DEVID2 PB12
+
+# SPI3: OSD Chip (AT7456E) pada U6
+SPI 3 PC10 PC11 PC12 SPI_DEVICE_OSD
+SPIDEV osd SPI3 DEVID3 PC8
+
+# I2C Bus: Barometer (SPL06-001) pada U8
+I2C 1 PB6 PB7
+
+# ==============================================================================
+# UART / Serial Ports
+# ==============================================================================
+# UART1: GPS / Peripheral (TX1: PA9, RX1: PA10)
+SERIAL_ORDER standard GPS1
+UART 1 PA9 PA10
+GPS_AUTO_CONFIG 1
+
+# UART2: Telemetri / Radio (TX2: PA2, RX2: PA3)
+SERIAL_ORDER telem1
+UART 2 PA2 PA3
+
+# UART3: Port TX3/RX3 (TX3: PB10, RX3: PB11)
+SERIAL_ORDER debug
+UART 3 PB10 PB11
+
+# UART4: Port TX4/RX4 (TX4: PC10/terbagi, RX4: PC11/terbagi - dialihkan ke serial umum)
+SERIAL_ORDER serial4
+UART 4 PC10 PC11
+
+# ==============================================================================
+# PWM Motor Outputs (ESC / Motor / Servo)
+# ==============================================================================
+# Motor Utama & Servo berdasarkan pemetaan timer pin MCU:
+# motor1 -> PA0 (TIM2_CH1)
+# motor2 -> PA1 (TIM2_CH2)
+# motor3 -> PA2 (TIM2_CH3 - shared/diatur ulang)
+# motor4 -> PA3 (TIM2_CH4 - shared/diatur ulang)
+# motor5 -> PB0 (TIM3_CH3)
+# motor6 -> PB1 (TIM3_CH4)
+# servo1 -> PC6 (TIM8_CH1)
+# servo2 -> PC7 (TIM8_CH2)
+# servo3 -> PC8 / pin lain
+
+PWM_MAIN 1 PA0
+PWM_MAIN 2 PA1
+PWM_MAIN 3 PB0
+PWM_MAIN 4 PB1
+
+# ==============================================================================
+# Analog Inputs (Sensor Tegangan Baterai / Current)
+# ==============================================================================
+# Berdasarkan resistor pembagi tegangan baterai di jalur BATT1-6s
+PC0 BATT_VOLT_PIN ADC1 ANALOG
+PC1 BATT_CURR_PIN ADC1 ANALOG
+
+# ==============================================================================
+# Status LEDs & Periferal Pendukung
+# ==============================================================================
+# LED Indikator (LED1 Merah, LED2 Biru, LED3 Hijau)
+PC13 LED_GREEN OUTPUT
+PC14 LED_RED OUTPUT
+PC15 LED_BLUE OUTPUT
+LED_LABEL 1 GREEN
+LED_LABEL 2 RED
+LED_LABEL 3 BLUE
+
+# Safety Switch & Buzzer (jika ada di skematik)
+# BOOT0 & NRST diatur otomatis oleh sistem STM32
+
+# ==============================================================================
+# Bootloader Configuration (Mandiri tanpa bergantung board lain)
+# ==============================================================================
+AP_BOOTLOADER_FLASHING_ENABLED 0
+FLASH_BOOTLOADER 0
