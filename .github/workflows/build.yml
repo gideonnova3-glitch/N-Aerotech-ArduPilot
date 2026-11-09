@@ -20,8 +20,20 @@ jobs:
           cat << 'EOF' > libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat
           include ../SpeedyBeeF405WING/hwdef.dat
           BOARD_NAME N-Aerotech-F405
-          undef AP_BOOTLOADER_FLASHING_ENABLED
           EOF
+
+      - name: Generate or Link Bootloader
+        run: |
+          # Menyalin bootloader bawaan SpeedyBeeF405WING agar terbaca sebagai bootloader N-Aerotech-F405
+          if [ -f "Tools/bootloaders/SpeedyBeeF405WING_b1.bin" ]; then
+            cp Tools/bootloaders/SpeedyBeeF405WING_b1.bin Tools/bootloaders/N-Aerotech-F405_b1.bin
+          elif [ -f "Tools/bootloaders/speedybeef405wing_b1.bin" ]; then
+            cp Tools/bootloaders/speedybeef405wing_b1.bin Tools/bootloaders/N-Aerotech-F405_b1.bin
+          else
+            # Jika tidak ada, buat salinan dummy atau jalankan script build bootloader resmi
+            python3 Tools/scripts/build_bootloaders.py SpeedyBeeF405WING
+            cp Tools/bootloaders/SpeedyBeeF405WING_b1.bin Tools/bootloaders/N-Aerotech-F405_b1.bin || true
+          fi
 
       - name: Set up Python & GCC Toolchain
         run: |
