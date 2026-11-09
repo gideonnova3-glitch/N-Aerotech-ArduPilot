@@ -9,19 +9,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Custom Repository
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Board Definition
+      - name: Clone ArduPilot Source
         run: |
-          # Memastikan folder hwdef N-Aerotech-F405 ada di dalam source ardupilot (jika repo ini di-clone sebagai modul atau digabung)
-          # Atau kita salin dari folder root ke ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
-          mkdir -p ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          if [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            cp libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          git clone --recurse-submodules https://github.com/ArduPilot/ardupilot.git ardupilot_src
+
+      - name: Copy Custom Board Definition to ArduPilot
+        run: |
+          mkdir -p ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+          if [ -f "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           fi
 
       - name: Set up Python
@@ -31,13 +30,13 @@ jobs:
 
       - name: Install Prerequisites
         run: |
-          cd ArduPilot
+          cd ardupilot_src
           pip install empy==3.3.4 pexpect
           Tools/environment_install/install-prereqs-the-hard-way.sh -y
 
       - name: Compile Firmware
         run: |
-          cd ArduPilot
+          cd ardupilot_src
           export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
           ./waf configure --board N-Aerotech-F405
           ./waf copter
@@ -46,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: N-Aerotech-F405-Firmware
-          path: ArduPilot/build/N-Aerotech-F405/bin/
+          path: ardupilot_src/build/N-Aerotech-F405/bin/
