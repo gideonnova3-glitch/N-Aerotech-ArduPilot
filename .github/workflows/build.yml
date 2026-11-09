@@ -7,19 +7,27 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout ArduPilot Full Source
+      - name: Checkout Custom Repository (For hwdef)
+        uses: actions/checkout@v4
+
+      - name: Checkout Official ArduPilot Source
         uses: actions/checkout@v4
         with:
           repository: ArduPilot/ardupilot
           ref: master
           submodules: recursive
+          path: ardupilot_src
 
-      - name: Inject Custom Board hwdef
+      - name: Inject Custom Board hwdef into ArduPilot
         run: |
-          # Menyalin file hwdef.dat buatanmu ke dalam direktori build ardupilot
-          mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          if [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            echo "File hwdef.dat kustom ditemukan di repositori."
+          # Membuat folder board mandiri di dalam source code ArduPilot yang resmi
+          mkdir -p ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+          
+          # Menyalin file hwdef.dat yang ada di repositori kita ke folder ArduPilot
+          if [ -f "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          elif [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           fi
 
       - name: Set up Python & GCC Toolchain
@@ -30,7 +38,7 @@ jobs:
 
       - name: Configure and Compile Copter
         run: |
-          # Perintah waf yang benar langsung menggunakan skrip utama ArduPilot
+          cd ardupilot_src
           ./waf configure --board N-Aerotech-F405 --disable-bootloader
           ./waf copter
 
@@ -38,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: N-Aerotech-F405-Copter
-          path: build/N-Aerotech-F405/bin/
+          path: ardupilot_src/build/N-Aerotech-F405/bin/
