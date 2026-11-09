@@ -5,9 +5,10 @@
 include ../SpeedyBeeF405WING/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 
-# Batalkan definisi lama pin PC0 dan PC1 dari board induk agar tidak terjadi error "Pin redefined"
+# Batalkan definisi lama pin yang konflik dari board induk
 undef PC0
 undef PC1
+undef PC13
 
 # Override Pin Mapping sesuai Skematik N-Aerotech-F405
 # SPI1: IMU Utama (ICM-42688-P)
@@ -38,11 +39,11 @@ PWM_MAIN 2 PA1
 PWM_MAIN 3 PB0
 PWM_MAIN 4 PB1
 
-# Analog Voltage & Current (Diredefini ulang dengan aman setelah di-undef)
+# Analog Voltage & Current
 PC0 BATT_VOLT_PIN ADC1 ANALOG
 PC1 BATT_CURR_PIN ADC1 ANALOG
 
-# Status LEDs
+# Status LEDs (Aman setelah di-undef)
 PC13 LED_GREEN OUTPUT
 PC14 LED_RED OUTPUT
 PC15 LED_BLUE OUTPUT
