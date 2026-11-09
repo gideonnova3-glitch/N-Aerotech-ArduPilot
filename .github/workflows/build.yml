@@ -1,0 +1,49 @@
+name: Build ArduPilot Custom Board
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout ArduPilot Full Source
+        uses: actions/checkout@v4
+        with:
+          repository: ArduPilot/ardupilot
+          ref: master
+          submodules: recursive
+
+      - name: Create Custom Board Folder
+        run: |
+          mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+
+      - name: Create hwdef.dat for N-Aerotech-F405
+        run: |
+          cat << 'EOF' > libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat
+          # Board definition for N-Aerotech-F405 based on SpeedyBeeF405WING
+          include ../SpeedyBeeF405WING/hwdef.dat
+          BOARD_NAME N-Aerotech-F405
+          EOF
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Prerequisites
+        run: |
+          pip install empy==3.3.4 pexpect
+          Tools/environment_install/install-prereqs-the-hard-way.sh -y
+
+      - name: Compile Copter Firmware
+        run: |
+          export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
+          ./waf configure --board N-Aerotech-F405
+          ./waf copter
+
+      - name: Upload Firmware Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: N-Aerotech-F405-Copter
+          path: build/N-Aerotech-F405/bin/
