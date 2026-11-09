@@ -8,44 +8,42 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./ardupilot
     steps:
-      - name: Checkout ArduPilot Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          repository: ArduPilot/ardupilot
-          path: ardupilot
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Copy Custom Board Definition
+      - name: Setup Board Definition
         run: |
-          mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          # Salin file hwdef.dat dari root repo ke folder ardupilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/ jika ada
-          if [ -f "../libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            cp ../libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          # Memastikan folder hwdef N-Aerotech-F405 ada di dalam source ardupilot (jika repo ini di-clone sebagai modul atau digabung)
+          # Atau kita salin dari folder root ke ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          mkdir -p ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
+          if [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            cp libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           fi
 
-      - name: Set up Python Environment
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Install Prerequisite Tools
+      - name: Install Prerequisites
         run: |
+          cd ArduPilot
           pip install empy==3.3.4 pexpect
           Tools/environment_install/install-prereqs-the-hard-way.sh -y
 
-      - name: Compile Copter Firmware
+      - name: Compile Firmware
         run: |
+          cd ArduPilot
           export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
           ./waf configure --board N-Aerotech-F405
           ./waf copter
 
-      - name: Upload Build Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: N-Aerotech-F405-Firmware
-          path: build/N-Aerotech-F405/bin/
+          path: ArduPilot/build/N-Aerotech-F405/bin/
