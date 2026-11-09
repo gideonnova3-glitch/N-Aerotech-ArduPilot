@@ -4,7 +4,7 @@
 # ==============================================================================
 
 # MCU & Core Configuration
-MCU STM32F40x STM32F405
+MCU STM32F4 STM32F405
 board_name N-Aerotech-F405
 define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 AP_VERSION_NAME N-Aerotech-F405-V1.0
