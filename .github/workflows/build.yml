@@ -14,23 +14,12 @@ jobs:
           ref: master
           submodules: recursive
 
-      - name: Create Custom Board Folder & hwdef
+      - name: Inject Custom Board hwdef
         run: |
+          # Menyalin file hwdef.dat buatanmu ke dalam direktori build ardupilot
           mkdir -p libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          cat << 'EOF' > libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat
-          include ../SpeedyBeeF405WING/hwdef.dat
-          BOARD_NAME N-Aerotech-F405
-          EOF
-
-      - name: Generate Dummy Bootloader File to Satisfy Compiler
-        run: |
-          # Membuat file biner kosong atau menyalin biner bawaan agar compiler tidak error
-          mkdir -p Tools/bootloaders
-          if [ -f "Tools/bootloaders/SpeedyBeeF405WING_b1.bin" ]; then
-            cp Tools/bootloaders/SpeedyBeeF405WING_b1.bin Tools/bootloaders/N-Aerotech-F405_b1.bin
-          else
-            # Membuat file biner dummy berukuran 16KB jika file referensi belum ter-generate
-            dd if=/dev/zero of=Tools/bootloaders/N-Aerotech-F405_b1.bin bs=1024 count=16
+          if [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
+            echo "File hwdef.dat kustom ditemukan di repositori."
           fi
 
       - name: Set up Python & GCC Toolchain
@@ -41,7 +30,8 @@ jobs:
 
       - name: Configure and Compile Copter
         run: |
-          ./waf configure --board N-Aerotech-F405
+          # Mengkompilasi firmware Copter untuk target board mandiri N-Aerotech-F405
+          ./waf configure --board N-Aerotech-F405 --disable-bootloader
           ./waf copter
 
       - name: Upload Firmware Artifacts
