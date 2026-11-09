@@ -20,6 +20,7 @@ jobs:
           cat << 'EOF' > libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat
           include ../SpeedyBeeF405WING/hwdef.dat
           BOARD_NAME N-Aerotech-F405
+          AP_BOOTLOADER_FLASHING_ENABLED 0
           EOF
 
       - name: Set up Python & GCC Toolchain
