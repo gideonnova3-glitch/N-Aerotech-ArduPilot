@@ -1,47 +1,20 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Production Standard)
+# Hardware Definition: N-Aerotech-F405 (Pure Independent Production)
 # ==============================================================================
 
-# Menggunakan core dan driver standar pabrikan yang teruji stabil
-include ../SpeedyBeeF405WING/hwdef.dat
-
+MCU STM32F4 STM32F405
 BOARD_NAME N-Aerotech-F405
+define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Membersihkan konflik pin bawaan board referensi sebelum di-mapping ulang
-undef PA4
-undef PA5
-undef PA6
-undef PA7
-undef PB12
-undef PB13
-undef PB14
-undef PB15
-undef PC8
-undef PC10
-undef PC11
-undef PC12
-undef PB6
-undef PB7
-undef PA9
-undef PA10
-undef PA2
-undef PA3
-undef PB10
-undef PB11
-undef PA0
-undef PA1
-undef PB0
-undef PB1
-undef PC0
-undef PC1
-undef PC13
-undef PC14
-undef PC15
+# Flash & Memory Map (1MB Flash)
+FLASH_SIZE_KB 1024
+env AP_HAL_CHIBIOS_USE_LEGACY_PLI FALSE
 
-# ==============================================================================
-# Mapping Pin Kustom Berdasarkan Skematik Hardware Anda
-# ==============================================================================
+# Clock Configuration (External 8MHz Crystal)
+CLK HSE 8000000
+CLK_SYSCLK 168000000
+CLK_HSIRC 16000000
 
 # SPI1: IMU Utama (ICM-42688-P)
 SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
@@ -83,6 +56,6 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Konfigurasi Build Mandiri
+# Disable bootloader checks for custom build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
