@@ -1,20 +1,46 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Official Common Template Architecture)
+# Hardware Definition: N-Aerotech-F405 (Verified Production Standard)
 # ==============================================================================
 
-# Menggunakan template core STM32F405 resmi dari direktori common ArduPilot
-include common/STM32F405.dat
+# Menggunakan basis referensi resmi yang modul MCU-nya sudah pasti tersedia di core ArduPilot
+include ../MatekF405/hwdef.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Konfigurasi Clock & Flash Standar STM32F405
-FLASH_SIZE_KB 1024
-CLK HSE 8000000
-CLK_SYSCLK 168000000
+# Bersihkan total seluruh pin bawaan referensi yang berpotensi konflik
+undef PA4
+undef PA5
+undef PA6
+undef PA7
+undef PB12
+undef PB13
+undef PB14
+undef PB15
+undef PC8
+undef PC10
+undef PC11
+undef PC12
+undef PB6
+undef PB7
+undef PA9
+undef PA10
+undef PA2
+undef PA3
+undef PB10
+undef PB11
+undef PA0
+undef PA1
+undef PB0
+undef PB1
+undef PC0
+undef PC1
+undef PC13
+undef PC14
+undef PC15
 
 # ==============================================================================
-# Pemetaan Pin Hardware Kustom N-Aerotech-F405
+# Pemetaan Pin Kustom Sesuai Skematik N-Aerotech-F405
 # ==============================================================================
 
 # SPI1: IMU Utama (ICM-42688-P)
@@ -57,6 +83,6 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Disable Bootloader Check
+# Konfigurasi Build & Bootloader
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
