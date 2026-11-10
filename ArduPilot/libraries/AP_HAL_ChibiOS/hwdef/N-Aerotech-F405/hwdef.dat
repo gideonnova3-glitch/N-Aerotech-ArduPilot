@@ -1,56 +1,56 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Correct Include Path)
+# Hardware Definition: N-Aerotech-F405 (Pure Standalone)
+# MCU: STM32F405xx (168MHz, 1MB Flash)
 # ==============================================================================
 
-# Memanggil basis file STM32F4 langsung dari direktori hwdef utama ArduPilot
-include stm32f4.dat
+# Definisikan spesifikasi dasar chip STM32F405 secara mandiri
+MCU STM32F4xx STM32F405xx 168000000
+board_name N-Aerotech-F405
+define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 
-BOARD_NAME N-Aerotech-F405
-AP_VERSION_NAME N-Aerotech-F405-V1.0
-
-# Alokasi Flash untuk STM32F405 (1MB)
+# Konfigurasi Kristal & Memori Flash
+OSC_XTAL 8000000
 flash size 1024
 FLASH_RESERVE_START_KB 16
 
-# Konfigurasi USB VCP Bawaan
+# Konfigurasi USB Virtual COM Port (VCP) untuk Koneksi Ground Station
 define HAL_USE_USB TRUE
 USB_DRIVER USBD1
 USB_CDC_LINE_CODING_NOTIFICATIONS TRUE
 
 # ------------------------------------------------------------------------------
-# PEMETAAN PERANGKAT KERAS (N-Aerotech-F405 Custom Layout)
+# PEMETAAN PERANGKAT KERAS KUSTOM (N-Aerotech-F405)
 # ------------------------------------------------------------------------------
 
-# SPI Bus Declarations
+# 1. SPI Bus & Sensor Utama
 SPI 1 PA5 PA6 PA7
 SPI 2 PB13 PB14 PB15
 SPI 3 PC10 PC11 PC12
 
-# SPI Devices & Sensors Mapping
 SPIDEV imu1  SPI1 DEVID1 PA4  SPI_DEVICE_IMU  8000000
 SPIDEV flash SPI2 DEVID2 PB12 SPI_DEVICE_OSD  8000000
 SPIDEV osd   SPI3 DEVID3 PC8  SPI_DEVICE_OSD  4000000
 
-# I2C Bus: Barometer (SPL06-001)
+# 2. I2C Bus (Barometer SPL06)
 I2C 1 PB6 PB7
 
-# UART / Serial Ports
+# 3. UART / Serial Ports
 SERIAL_ORDER standard GPS1 telem1 debug
 UART 1 PA9 PA10
 UART 2 PA2 PA3
 UART 3 PB10 PB11
 
-# PWM Motor Outputs
+# 4. PWM Motor Outputs (Standard Quad Layout)
 PWM_MAIN 1 PA0
 PWM_MAIN 2 PA1
 PWM_MAIN 3 PB0
 PWM_MAIN 4 PB1
 
-# Analog Voltage & Current Sensors
+# 5. Sensor Analog (Baterai Volt & Current)
 PC0 BATT_VOLT_PIN ADC1 ANALOG
 PC1 BATT_CURR_PIN ADC1 ANALOG
 
-# Status LEDs
+# 6. Status LED Board
 PC13 LED_GREEN OUTPUT
 PC14 LED_RED OUTPUT
 PC15 LED_BLUE OUTPUT
@@ -58,7 +58,6 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Opsi Konfigurasi Build
+# 7. Konfigurasi Sistem Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
-```[cite: 20, 21]
