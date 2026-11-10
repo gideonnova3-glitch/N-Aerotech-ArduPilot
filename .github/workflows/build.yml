@@ -20,10 +20,7 @@ jobs:
 
       - name: Inject Custom Board hwdef into ArduPilot
         run: |
-          # Membuat folder board mandiri di dalam source code ArduPilot yang resmi
           mkdir -p ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-
-          # Menyalin seluruh file (hwdef.dat, defaults.parm, dll) ke folder ArduPilot
           if [ -d "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405" ]; then
             cp -r ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/* ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           elif [ -d "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405" ]; then
@@ -48,3 +45,5 @@ jobs:
           name: N-Aerotech-F405-Copter
           path: ardupilot_src/build/N-Aerotech-F405/bin/
 ```[cite: 11, 12]
+
+Setelah kamu memperbarui file tersebut di GitHub, masuk kembali ke menu **Actions**, pilih *workflow* **Build ArduPilot Custom Board** di bilah kiri, lalu tombol **Run workflow** akan muncul di sebelah kanan atas untuk memulai proses *build* baru secara manual[cite: 13].
