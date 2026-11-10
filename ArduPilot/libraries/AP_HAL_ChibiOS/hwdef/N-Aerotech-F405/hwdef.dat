@@ -1,9 +1,9 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Clean Core Architecture)
+# Hardware Definition: N-Aerotech-F405 (Valid Relative Include)
 # ==============================================================================
 
-# Mewarisi fondasi murni chip STM32F4 resmi dari ArduPilot (Bukan board orang lain)
-include hwdef/scripts/stm32f4.dat
+# Menggunakan path relatif yang benar menuju skrip inti ArduPilot
+include ../../scripts/stm32f4.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
@@ -61,3 +61,4 @@ LED_LABEL 3 BLUE
 # Opsi Konfigurasi Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
+```[cite: 20]
