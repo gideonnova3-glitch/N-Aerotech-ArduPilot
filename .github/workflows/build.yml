@@ -22,12 +22,12 @@ jobs:
         run: |
           # Membuat folder board mandiri di dalam source code ArduPilot yang resmi
           mkdir -p ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405
-          
-          # Menyalin file hwdef.dat yang ada di repositori kita ke folder ArduPilot
-          if [ -f "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            cp ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
-          elif [ -f "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat" ]; then
-            cp libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/hwdef.dat ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+
+          # Menyalin seluruh file (hwdef.dat, defaults.parm, dll) ke folder ArduPilot
+          if [ -d "ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405" ]; then
+            cp -r ArduPilot/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/* ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
+          elif [ -d "libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405" ]; then
+            cp -r libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/* ardupilot_src/libraries/AP_HAL_ChibiOS/hwdef/N-Aerotech-F405/
           fi
 
       - name: Set up Python & GCC Toolchain
@@ -47,3 +47,4 @@ jobs:
         with:
           name: N-Aerotech-F405-Copter
           path: ardupilot_src/build/N-Aerotech-F405/bin/
+```[cite: 11, 12]
