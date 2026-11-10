@@ -3,17 +3,16 @@
 # MCU: STM32F405xx (168MHz, 1MB Flash)
 # ==============================================================================
 
-# Definisikan spesifikasi dasar chip STM32F405 secara mandiri
 MCU STM32F4xx STM32F405xx 168000000
 board_name N-Aerotech-F405
 define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 
-# Konfigurasi Kristal & Memori Flash
+# Konfigurasi Kristal & Memori Flash (Gunakan FLASH_SIZE_KB)
 OSC_XTAL 8000000
-flash size 1024
+FLASH_SIZE_KB 1024
 FLASH_RESERVE_START_KB 16
 
-# Konfigurasi USB Virtual COM Port (VCP) untuk Koneksi Ground Station
+# Konfigurasi USB Virtual COM Port (VCP)
 define HAL_USE_USB TRUE
 USB_DRIVER USBD1
 USB_CDC_LINE_CODING_NOTIFICATIONS TRUE
