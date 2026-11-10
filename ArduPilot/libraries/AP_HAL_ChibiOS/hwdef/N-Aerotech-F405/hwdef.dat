@@ -61,3 +61,6 @@ LED_LABEL 3 BLUE
 # 7. Konfigurasi Sistem Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
+```[cite: 18]
+
+Pastikan kamu mengecek langsung file `hwdef.dat` di tab *Code* repository GitHub-mu untuk memastikan baris `APJ_BOARD_ID 1000` sudah ada di dalamnya sebelum menjalankan ulang *workflow*[cite: 18].
