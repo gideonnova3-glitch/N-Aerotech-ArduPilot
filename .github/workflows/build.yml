@@ -44,6 +44,3 @@ jobs:
         with:
           name: N-Aerotech-F405-Copter
           path: ardupilot_src/build/N-Aerotech-F405/bin/
-```[cite: 11, 12]
-
-Setelah kamu memperbarui file tersebut di GitHub, masuk kembali ke menu **Actions**, pilih *workflow* **Build ArduPilot Custom Board** di bilah kiri, lalu tombol **Run workflow** akan muncul di sebelah kanan atas untuk memulai proses *build* baru secara manual[cite: 13].
