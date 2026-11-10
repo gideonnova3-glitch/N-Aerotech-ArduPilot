@@ -1,49 +1,24 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Complete Clean & Secure Build)
+# Hardware Definition: N-Aerotech-F405 (Clean Core Architecture)
 # ==============================================================================
 
-include ../MatekF405/hwdef.dat
+# Mewarisi fondasi murni chip STM32F4 resmi dari ArduPilot (Bukan board orang lain)
+include hwdef/scripts/stm32f4.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# ------------------------------------------------------------------------------
-# PEMBERSIHAN TOTAL (UNDEF): Menghilangkan seluruh potensi benturan pin 
-# dari board induk MatekF405 yang tidak sesuai dengan skematik kustom kita
-# ------------------------------------------------------------------------------
-undef PA0
-undef PA1
-undef PA2
-undef PA3
-undef PA4
-undef PA5
-undef PA6
-undef PA7
-undef PA8
-undef PA9
-undef PA10
-undef PB0
-undef PB1
-undef PB6
-undef PB7
-undef PB10
-undef PB11
-undef PB12
-undef PB13
-undef PB14
-undef PB15
-undef PC0
-undef PC1
-undef PC8
-undef PC10
-undef PC11
-undef PC12
-undef PC13
-undef PC14
-undef PC15
+# Alokasi Flash untuk STM32F405 (1MB)
+flash size 1024
+FLASH_RESERVE_START_KB 16
+
+# Konfigurasi USB VCP Bawaan
+define HAL_USE_USB TRUE
+USB_DRIVER USBD1
+USB_CDC_LINE_CODING_NOTIFICATIONS TRUE
 
 # ------------------------------------------------------------------------------
-# PEMETAAN ULANG KUSTOM (N-Aerotech-F405 Hardware Layout)
+# PEMETAAN PERANGKAT KERAS (N-Aerotech-F405 Custom Layout)
 # ------------------------------------------------------------------------------
 
 # SPI Bus Declarations
@@ -60,11 +35,10 @@ SPIDEV osd   SPI3 DEVID3 PC8  SPI_DEVICE_OSD  4000000
 I2C 1 PB6 PB7
 
 # UART / Serial Ports
-SERIAL_ORDER standard GPS1 telem1 debug serial4
+SERIAL_ORDER standard GPS1 telem1 debug
 UART 1 PA9 PA10
 UART 2 PA2 PA3
 UART 3 PB10 PB11
-UART 4 PC10 PC11
 
 # PWM Motor Outputs
 PWM_MAIN 1 PA0
@@ -84,7 +58,6 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Konfigurasi Build & Bootloader
+# Opsi Konfigurasi Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
-```[cite: 1]
