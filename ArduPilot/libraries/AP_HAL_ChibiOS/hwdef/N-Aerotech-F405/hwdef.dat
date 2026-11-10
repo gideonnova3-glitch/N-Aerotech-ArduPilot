@@ -7,8 +7,8 @@ MCU STM32F4xx STM32F405xx 168000000
 board_name N-Aerotech-F405
 define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 
-# Konfigurasi Kristal & Memori Flash (Gunakan FLASH_SIZE_KB)
-OSC_XTAL 8000000
+# Konfigurasi Kristal (Gunakan OSCILLATOR_HZ) & Memori Flash
+OSCILLATOR_HZ 8000000
 FLASH_SIZE_KB 1024
 FLASH_RESERVE_START_KB 16
 
