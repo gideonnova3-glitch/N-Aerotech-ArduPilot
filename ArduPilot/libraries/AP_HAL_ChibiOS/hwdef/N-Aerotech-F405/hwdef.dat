@@ -1,14 +1,7 @@
-# ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Verified Production Standard)
-# ==============================================================================
-
-# Menggunakan basis referensi resmi yang modul MCU-nya sudah pasti tersedia di core ArduPilot
 include ../MatekF405/hwdef.dat
-
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Bersihkan total seluruh pin bawaan referensi yang berpotensi konflik
 undef PA4
 undef PA5
 undef PA6
@@ -39,43 +32,31 @@ undef PC13
 undef PC14
 undef PC15
 
-# ==============================================================================
-# Pemetaan Pin Kustom Sesuai Skematik N-Aerotech-F405
-# ==============================================================================
-
-# SPI1: IMU Utama (ICM-42688-P)
 SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
 SPIDEV imu1 SPI1 DEVID1 PA4
 
-# SPI2: Flash Memory (W25Q128)
 SPI 2 PB13 PB14 PB15 SPI_DEVICE_OSD
 SPIDEV flash SPI2 DEVID2 PB12
 
-# SPI3: OSD (AT7456E)
 SPI 3 PC10 PC11 PC12 SPI_DEVICE_OSD
 SPIDEV osd SPI3 DEVID3 PC8
 
-# I2C Bus: Barometer (SPL06-001)
 I2C 1 PB6 PB7
 
-# UART / Serial Ports
 SERIAL_ORDER standard GPS1 telem1 debug serial4
 UART 1 PA9 PA10
 UART 2 PA2 PA3
 UART 3 PB10 PB11
 UART 4 PC10 PC11
 
-# PWM Motor Outputs
 PWM_MAIN 1 PA0
 PWM_MAIN 2 PA1
 PWM_MAIN 3 PB0
 PWM_MAIN 4 PB1
 
-# Analog Voltage & Current Sensors
 PC0 BATT_VOLT_PIN ADC1 ANALOG
 PC1 BATT_CURR_PIN ADC1 ANALOG
 
-# Status LEDs
 PC13 LED_GREEN OUTPUT
 PC14 LED_RED OUTPUT
 PC15 LED_BLUE OUTPUT
@@ -83,6 +64,5 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Konfigurasi Build & Bootloader
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
