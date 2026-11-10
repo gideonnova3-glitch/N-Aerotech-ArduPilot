@@ -1,5 +1,5 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Valid Parser Standard)
+# Hardware Definition: N-Aerotech-F405 (Complete Clean & Secure Build)
 # ==============================================================================
 
 include ../MatekF405/hwdef.dat
@@ -7,7 +7,46 @@ include ../MatekF405/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# SPI Bus Declarations (Mengikuti standar arsitektur ChibiOS ArduPilot)
+# ------------------------------------------------------------------------------
+# PEMBERSIHAN TOTAL (UNDEF): Menghilangkan seluruh potensi benturan pin 
+# dari board induk MatekF405 yang tidak sesuai dengan skematik kustom kita
+# ------------------------------------------------------------------------------
+undef PA0
+undef PA1
+undef PA2
+undef PA3
+undef PA4
+undef PA5
+undef PA6
+undef PA7
+undef PA8
+undef PA9
+undef PA10
+undef PB0
+undef PB1
+undef PB6
+undef PB7
+undef PB10
+undef PB11
+undef PB12
+undef PB13
+undef PB14
+undef PB15
+undef PC0
+undef PC1
+undef PC8
+undef PC10
+undef PC11
+undef PC12
+undef PC13
+undef PC14
+undef PC15
+
+# ------------------------------------------------------------------------------
+# PEMETAAN ULANG KUSTOM (N-Aerotech-F405 Hardware Layout)
+# ------------------------------------------------------------------------------
+
+# SPI Bus Declarations
 SPI 1 PA5 PA6 PA7
 SPI 2 PB13 PB14 PB15
 SPI 3 PC10 PC11 PC12
@@ -48,3 +87,4 @@ LED_LABEL 3 BLUE
 # Konfigurasi Build & Bootloader
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
+```[cite: 1]
