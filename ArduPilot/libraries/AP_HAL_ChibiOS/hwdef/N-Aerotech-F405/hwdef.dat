@@ -5,7 +5,7 @@
 include ../SpeedyBeeF405WING/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 
-# Batalkan definisi lama pin yang konflik dari board induk
+# Batalkan definisi lama semua pin yang konflik dari board induk
 undef PC0
 undef PC1
 undef PC13
