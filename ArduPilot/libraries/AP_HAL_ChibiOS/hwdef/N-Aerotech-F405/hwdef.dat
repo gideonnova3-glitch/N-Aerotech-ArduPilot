@@ -1,20 +1,21 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Pure Independent Production)
+# Hardware Definition: N-Aerotech-F405 (Clean Template Architecture)
 # ==============================================================================
 
-MCU STM32F4 STM32F405
+# Menggunakan template core STM32F405 generik resmi ArduPilot (Bukan board produk)
+include STM32F405/hwdef.dat
+
 BOARD_NAME N-Aerotech-F405
-define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Flash & Memory Map (1MB Flash)
+# Konfigurasi Clock & Flash Standar STM32F405
 FLASH_SIZE_KB 1024
-env AP_HAL_CHIBIOS_USE_LEGACY_PLI FALSE
-
-# Clock Configuration (External 8MHz Crystal)
 CLK HSE 8000000
 CLK_SYSCLK 168000000
-CLK_HSIRC 16000000
+
+# ==============================================================================
+# Pemetaan Pin Hardware Kustom N-Aerotech-F405
+# ==============================================================================
 
 # SPI1: IMU Utama (ICM-42688-P)
 SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
@@ -56,6 +57,6 @@ LED_LABEL 1 GREEN
 LED_LABEL 2 RED
 LED_LABEL 3 BLUE
 
-# Disable bootloader checks for custom build
+# Disable Bootloader Check
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
