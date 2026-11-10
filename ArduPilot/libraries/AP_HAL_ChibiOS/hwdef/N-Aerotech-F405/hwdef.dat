@@ -5,7 +5,7 @@
 
 MCU STM32F4xx STM32F405xx 168000000
 board_name N-Aerotech-F405
-APJ_BOARD_ID 1000
+APJ_BOARD_ID N-Aerotech-F405
 define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 
 # Konfigurasi Kristal & Memori Flash
@@ -61,6 +61,3 @@ LED_LABEL 3 BLUE
 # 7. Konfigurasi Sistem Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
-```[cite: 18]
-
-Pastikan kamu mengecek langsung file `hwdef.dat` di tab *Code* repository GitHub-mu untuk memastikan baris `APJ_BOARD_ID 1000` sudah ada di dalamnya sebelum menjalankan ulang *workflow*[cite: 18].
