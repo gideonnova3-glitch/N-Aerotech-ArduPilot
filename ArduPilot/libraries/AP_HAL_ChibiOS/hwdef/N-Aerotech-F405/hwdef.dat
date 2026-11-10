@@ -1,5 +1,5 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Clean & Validated Standard)
+# Hardware Definition: N-Aerotech-F405 (Valid Parser Standard)
 # ==============================================================================
 
 include ../MatekF405/hwdef.dat
@@ -7,23 +7,15 @@ include ../MatekF405/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Redefinisi & Petakan Ulang Pin SPI1 (IMU ICM-42688-P) secara eksplisit
-PA5 SPI1_SCK SPI_DEVICE_IMU
-PA6 SPI1_MISO SPI_DEVICE_IMU
-PA7 SPI1_MOSI SPI_DEVICE_IMU
-SPIDEV imu1 SPI1 DEVID1 PA4
+# SPI Bus Declarations (Mengikuti standar arsitektur ChibiOS ArduPilot)
+SPI 1 PA5 PA6 PA7
+SPI 2 PB13 PB14 PB15
+SPI 3 PC10 PC11 PC12
 
-# Redefinisi & Petakan Ulang Pin SPI2 (Flash W25Q128)
-PB13 SPI2_SCK SPI_DEVICE_OSD
-PB14 SPI2_MISO SPI_DEVICE_OSD
-PB15 SPI2_MOSI SPI_DEVICE_OSD
-SPIDEV flash SPI2 DEVID2 PB12
-
-# Redefinisi & Petakan Ulang Pin SPI3 (OSD AT7456E)
-PC10 SPI3_SCK SPI_DEVICE_OSD
-PC11 SPI3_MISO SPI_DEVICE_OSD
-PC12 SPI3_MOSI SPI_DEVICE_OSD
-SPIDEV osd SPI3 DEVID3 PC8
+# SPI Devices & Sensors Mapping
+SPIDEV imu1  SPI1 DEVID1 PA4  SPI_DEVICE_IMU  8000000
+SPIDEV flash SPI2 DEVID2 PB12 SPI_DEVICE_OSD  8000000
+SPIDEV osd   SPI3 DEVID3 PC8  SPI_DEVICE_OSD  4000000
 
 # I2C Bus: Barometer (SPL06-001)
 I2C 1 PB6 PB7
