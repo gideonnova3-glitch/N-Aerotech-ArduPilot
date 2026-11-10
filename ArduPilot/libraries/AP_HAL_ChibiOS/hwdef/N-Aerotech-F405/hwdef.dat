@@ -1,58 +1,28 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Verified Production Standard)
+# Hardware Definition: N-Aerotech-F405 (Clean & Validated Standard)
 # ==============================================================================
 
-# Menggunakan basis referensi resmi MatekF405 agar modul MCU stabil
 include ../MatekF405/hwdef.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
 
-# Bersihkan total seluruh pin bawaan referensi yang berpotensi konflik
-undef PA4
-undef PA5
-undef PA6
-undef PA7
-undef PB12
-undef PB13
-undef PB14
-undef PB15
-undef PC8
-undef PC10
-undef PC11
-undef PC12
-undef PB6
-undef PB7
-undef PA9
-undef PA10
-undef PA2
-undef PA3
-undef PB10
-undef PB11
-undef PA0
-undef PA1
-undef PB0
-undef PB1
-undef PC0
-undef PC1
-undef PC13
-undef PC14
-undef PC15
-
-# ==============================================================================
-# Pemetaan Pin Kustom Sesuai Skematik N-Aerotech-F405
-# ==============================================================================
-
-# SPI1: IMU Utama (ICM-42688-P)
-SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
+# Redefinisi & Petakan Ulang Pin SPI1 (IMU ICM-42688-P) secara eksplisit
+PA5 SPI1_SCK SPI_DEVICE_IMU
+PA6 SPI1_MISO SPI_DEVICE_IMU
+PA7 SPI1_MOSI SPI_DEVICE_IMU
 SPIDEV imu1 SPI1 DEVID1 PA4
 
-# SPI2: Flash Memory (W25Q128)
-SPI 2 PB13 PB14 PB15 SPI_DEVICE_OSD
+# Redefinisi & Petakan Ulang Pin SPI2 (Flash W25Q128)
+PB13 SPI2_SCK SPI_DEVICE_OSD
+PB14 SPI2_MISO SPI_DEVICE_OSD
+PB15 SPI2_MOSI SPI_DEVICE_OSD
 SPIDEV flash SPI2 DEVID2 PB12
 
-# SPI3: OSD (AT7456E)
-SPI 3 PC10 PC11 PC12 SPI_DEVICE_OSD
+# Redefinisi & Petakan Ulang Pin SPI3 (OSD AT7456E)
+PC10 SPI3_SCK SPI_DEVICE_OSD
+PC11 SPI3_MISO SPI_DEVICE_OSD
+PC12 SPI3_MOSI SPI_DEVICE_OSD
 SPIDEV osd SPI3 DEVID3 PC8
 
 # I2C Bus: Barometer (SPL06-001)
