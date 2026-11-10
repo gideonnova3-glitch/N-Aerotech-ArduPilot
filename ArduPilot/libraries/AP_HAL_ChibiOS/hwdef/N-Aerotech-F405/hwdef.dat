@@ -1,11 +1,14 @@
 # ==============================================================================
-# Hardware Definition for N-Aerotech-F405 (Complete Undef & Clean Override)
+# Hardware Definition for N-Aerotech-F405 (Final Production Version)
 # ==============================================================================
 
 include ../SpeedyBeeF405WING/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 
-# Undef semua pin yang di-override agar tidak ada error "redefined" dari induk
+# Gunakan parameter default bawaan SpeedyBee agar tidak mencari file kosong
+env AP_HAL_CHIBIOS_DEFAULT_PARAMETERS ../SpeedyBeeF405WING/defaults.parm
+
+# Undef semua pin yang di-override agar bersih total dari konflik induk
 undef PA4
 undef PA5
 undef PA6
