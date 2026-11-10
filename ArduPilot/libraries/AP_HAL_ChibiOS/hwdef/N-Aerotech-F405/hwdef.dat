@@ -1,17 +1,45 @@
 # ==============================================================================
-# Hardware Definition for N-Aerotech-F405 (Based on SpeedyBee Core)
+# Hardware Definition for N-Aerotech-F405 (Complete Undef & Clean Override)
 # ==============================================================================
 
 include ../SpeedyBeeF405WING/hwdef.dat
 BOARD_NAME N-Aerotech-F405
 
-# Batalkan definisi lama semua pin yang konflik dari board induk
+# Undef semua pin yang di-override agar tidak ada error "redefined" dari induk
+undef PA4
+undef PA5
+undef PA6
+undef PA7
+undef PB12
+undef PB13
+undef PB14
+undef PB15
+undef PC8
+undef PC10
+undef PC11
+undef PC12
+undef PB6
+undef PB7
+undef PA9
+undef PA10
+undef PA2
+undef PA3
+undef PB10
+undef PB11
+undef PA0
+undef PA1
+undef PB0
+undef PB1
 undef PC0
 undef PC1
 undef PC13
 undef PC14
+undef PC15
 
-# Override Pin Mapping sesuai Skematik N-Aerotech-F405
+# ==============================================================================
+# Definisi Pin Kustom Sesuai Skematik N-Aerotech-F405
+# ==============================================================================
+
 # SPI1: IMU Utama (ICM-42688-P)
 SPI 1 PA5 PA6 PA7 SPI_DEVICE_IMU
 SPIDEV imu1 SPI1 DEVID1 PA4
@@ -27,7 +55,7 @@ SPIDEV osd SPI3 DEVID3 PC8
 # I2C Bus: Barometer (SPL06-001)
 I2C 1 PB6 PB7
 
-# UART Ports
+# UART / Serial Ports
 SERIAL_ORDER standard GPS1 telem1 debug serial4
 UART 1 PA9 PA10
 UART 2 PA2 PA3
@@ -40,11 +68,11 @@ PWM_MAIN 2 PA1
 PWM_MAIN 3 PB0
 PWM_MAIN 4 PB1
 
-# Analog Voltage & Current
+# Analog Voltage & Current Sensors
 PC0 BATT_VOLT_PIN ADC1 ANALOG
 PC1 BATT_CURR_PIN ADC1 ANALOG
 
-# Status LEDs (Aman setelah di-undef)
+# Status LEDs
 PC13 LED_GREEN OUTPUT
 PC14 LED_RED OUTPUT
 PC15 LED_BLUE OUTPUT
