@@ -1,9 +1,9 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Valid Relative Include)
+# Hardware Definition: N-Aerotech-F405 (Correct Include Path)
 # ==============================================================================
 
-# Menggunakan path relatif yang benar menuju skrip inti ArduPilot
-include ../../scripts/stm32f4.dat
+# Memanggil basis file STM32F4 langsung dari direktori hwdef utama ArduPilot
+include stm32f4.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
@@ -61,4 +61,4 @@ LED_LABEL 3 BLUE
 # Opsi Konfigurasi Build
 AP_BOOTLOADER_FLASHING_ENABLED 0
 FLASH_BOOTLOADER 0
-```[cite: 20]
+```[cite: 20, 21]
