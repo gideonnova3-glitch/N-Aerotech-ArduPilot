@@ -2,7 +2,7 @@
 # Hardware Definition for N-Aerotech-F405 (Pure Independent Board)
 # ==============================================================================
 
-MCU STM32F4 STM32F405
+MCU STM32F4 STM32F40xx
 BOARD_NAME N-Aerotech-F405
 define HAL_BOARD_CLASS HAL_BOARD_CHIBIOS
 AP_VERSION_NAME N-Aerotech-F405-V1.0
