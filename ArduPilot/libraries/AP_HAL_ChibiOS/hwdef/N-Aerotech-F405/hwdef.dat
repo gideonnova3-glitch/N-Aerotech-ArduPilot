@@ -1,9 +1,9 @@
 # ==============================================================================
-# Hardware Definition: N-Aerotech-F405 (Clean Template Architecture)
+# Hardware Definition: N-Aerotech-F405 (Official Common Template Architecture)
 # ==============================================================================
 
-# Menggunakan template core STM32F405 generik resmi ArduPilot (Bukan board produk)
-include STM32F405/hwdef.dat
+# Menggunakan template core STM32F405 resmi dari direktori common ArduPilot
+include common/STM32F405.dat
 
 BOARD_NAME N-Aerotech-F405
 AP_VERSION_NAME N-Aerotech-F405-V1.0
